@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name='ifo'>
+
+    <!-- Base Quadrotor -->
+    <include>
+      <uri>model://ifo_base</uri>
+    </include>
+
+    <!-- Intel Realsense -->
+    <include>
+      <uri>model://realsense_d435i</uri>
+      <pose>0.12 0 0 0 0 0</pose>
+    </include>
+
+    <joint name="realsense_joint" type="revolute">
+      <child>realsense_d435i::realsense_link</child>
+      <parent>ifo_base::base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint>
+
+  </model>
+</sdf>
