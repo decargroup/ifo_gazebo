@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- ============================ PARAMETERS ============================ -->
+    <!-- ==================================================================== -->
+    <!-- Posix SITL environment launch script -->
+    <!-- launches PX4 SITL, Gazebo environment, and spawns vehicle -->
+    <!-- vehicle pose -->
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default="0"/>
+    <arg name="R" default="0"/>
+    <arg name="P" default="0"/>
+    <arg name="Y" default="0"/>
+
+    <!-- vehicle model and world -->
+    <arg name="est" default="ekf2"/>
+    <arg name="vehicle" default="iris"/>
+    <!-- <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/empty.world"/>-->
+    <arg name="sdf" default="/home/charles/catkin_ws/src/ifo_gazebo/models/ifo/ifo.sdf"/>
+
+    <!-- gazebo configs -->
+    <arg name="gui" default="true"/>
+    <arg name="debug" default="false"/>
+    <arg name="verbose" default="true"/>
+    <arg name="paused" default="false"/>
+    <arg name="respawn_gazebo" default="false"/>
+
+    <!-- PX4 configs -->
+    <arg name="interactive" default="true"/>
+    <arg name="px4_clone_dir" default="~/PX4-Autopilot"/>
+
+    <!-- ==================================================================== -->
+    <!-- Environment variables -->
+    <!-- px4 gazebo model directories-->
+    <env name="GAZEBO_PLUGIN_PATH" value="$GAZEBO_PLUGIN_PATH:$(arg px4_clone_dir)/build/px4_sitl_default/build_gazebo"/>
+    <env name="GAZEBO_MODEL_PATH" value="$GAZEBO_MODEL_PATH:$(arg px4_clone_dir)/Tools/sitl_gazebo/models/"/>
+    <env name="LD_LIBRARY_PATH" value="$LD_LIBRARY_PATH:$(arg px4_clone_dir)/build/px4_sitl_default/build_gazebo"/>
+    <!-- px4 environment variables-->
+    <env name="PX4_SIM_MODEL" value="$(arg vehicle)" />
+    <env name="PX4_ESTIMATOR" value="$(arg est)" />
+    <env name="ROS_PACKAGE_PATH" value="$ROS_PACKAGE_PATH:$(arg px4_clone_dir)/:$(arg px4_clone_dir)/Tools/sitl_gazebo" />
+
+    <!-- PX4 SITL -->
+    <arg unless="$(arg interactive)" name="px4_command_arg1" value="-d"/>
+    <arg     if="$(arg interactive)" name="px4_command_arg1" value=""/>
+    <node name="sitl" pkg="px4" type="px4" output="screen"
+        args="$(arg px4_clone_dir)/build/px4_sitl_default/etc -s etc/init.d-posix/rcS $(arg px4_command_arg1)" required="true"/>
+
+    <!-- Gazebo sim -->
+    <include file="/home/charles/catkin_ws/src/ifo_gazebo/launch/empty_world.launch">
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="debug" value="$(arg debug)"/>
+        <arg name="verbose" value="$(arg verbose)"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="respawn_gazebo" value="$(arg respawn_gazebo)"/>
+    </include>
+
+    <!-- gazebo model -->
+    <node name="$(anon vehicle_spawn)" pkg="gazebo_ros" type="spawn_model" output="screen" args="-sdf -file $(arg sdf) -model ifo -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
+</launch>

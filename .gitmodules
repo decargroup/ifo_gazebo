@@ -1,0 +1,3 @@
+[submodule "realsense_gazebo_plugin"]
+	path = realsense_gazebo_plugin
+	url = https://github.com/CharlesCossette/realsense_gazebo_plugin.git
