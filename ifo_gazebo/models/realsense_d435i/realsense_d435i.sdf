@@ -7,6 +7,15 @@
       <kinematic>0</kinematic>
       <gravity>0</gravity>
 
+      <inertial>
+        <mass> 0.0000001 </mass>
+        <inertia> 
+          <ixx> 1e-10 </ixx>
+          <iyy> 1e-10 </iyy>
+          <izz> 1e-10 </izz>
+        </inertia>
+      </inertial>
+
       <visual name="realsense_visual">
         <pose frame="base_link">0 0 0 1.5707 0 1.5707</pose>
         <cast_shadows>1</cast_shadows>
