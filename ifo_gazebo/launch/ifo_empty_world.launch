@@ -31,11 +31,11 @@
     <arg name="fcu_url" default="udp://:14540@localhost:14557"/>
     <arg name="respawn_mavros" default="false"/>
 
-    <!-- Remap topics for convenience -->
+    <!-- Remap topics for convenience 
     <remap from="/mavros/imu/data_raw" to="/ifo/imu/data_raw"/>
     <remap from="/mavros/imu/mag" to="/ifo/mag/data_raw"/>
     <remap from="/mavros/px4flow/ground_distance" to="/ifo/height/data_raw"/>
-    <remap from="/mavros/px4flow/optical_flow_rad" to="/ifo/optical_flow/data_raw_rad"/>
+    <remap from="/mavros/px4flow/optical_flow_rad" to="/ifo/optical_flow/data_raw_rad"/>-->
 
     <!-- PX4 SITL -->
     <arg unless="$(arg interactive)" name="px4_command_arg1" value="-d"/>
