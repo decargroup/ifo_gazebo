@@ -26,13 +26,15 @@ This repo is a collection of ROS packages, Gazebo models, and plugins. It does n
 The PX4 documentation cites that their installation scripts, which we will be using, are intended for a _clean_ Ubuntu 18.04 installation. It might still work for a non-fresh installation though. 
 ### Installing PX4
 Clone the PX4 source code
-
-	cd ~
-    git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+```
+cd ~
+git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+```
 
 The `--recursive` option is very important as it will clone an dinitialize the submodules that PX4 needs. Run the bash script `ubuntu.sh` with no arguments to install everything needed for PX4 development on your local machine.
-
-	bash ./PX4-Autopilot/Tools/setup/ubuntu.sh
+```
+bash ./PX4-Autopilot/Tools/setup/ubuntu.sh
+```
 	
 Reboot your computer when complete. Technically, at this point, your computer is also outfitted with a development environment to modify the PX4 source code itself, and do some basic software-in-the-loop (SITL) testing in simulation (not necessarily using Gazebo as the simulator).
 
@@ -40,9 +42,10 @@ See PX4's [Ubuntu Development Environment instructions](https://docs.px4.io/mast
 
 ### Installing ROS, MAVROS, Gazebo
 The PX4 documentation conveniently provides an install script which will install all the required software including ROS Melodic, Gazebo 9, MAVROS and more
-
-	wget https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_melodic.sh
-	bash ubuntu_sim_ros_melodic.sh
+```
+wget https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_melodic.sh
+bash ubuntu_sim_ros_melodic.sh
+```
 
 Note that this script should have created the directory `~/catkin_ws/` if it doesnt exist. 
 
@@ -50,12 +53,14 @@ See PX4's [ROS/Gazebo installation instructions](https://docs.px4.io/master/en/d
 
 ### Testing - Building PX4 and Running Gazebo
 Go to the directory where you cloned the PX4 source code
-
-	cd ~/PX4-Autopilot
+```
+cd ~/PX4-Autopilot
+```
 
 Then, build the PX4 source code
-
-	make px4_sitl gazebo
+```
+make px4_sitl gazebo
+```
 	
 This can take a while the first time, and should eventually launch PX4 and Gazebo at the end. __Note: this process can require a lot of memory, and can fail if other applications take up too much memory. Close all other applications before running the line above. Try multiple times if necessary.__
 
@@ -63,16 +68,17 @@ Arriving to this point indicates that you have successfully built PX4 and attach
 
 ## Setting up the custom IFO-S Model
 Clone the `ifo_gazebo` repo under `~/catkin_ws/src/`
-
-    cd ~/catkin_ws/src/
-    git clone https://YOUR_USERNAME@bitbucket.org/decargroup/ifo_gazebo.git
-
+```
+cd ~/catkin_ws/src/
+git clone https://YOUR_USERNAME@bitbucket.org/decargroup/ifo_gazebo.git
+```
 (Side note: the above URL is for an HTTPS login to the remote git repo, using SSH-keys when using git is very convenient and recommended.)
 
 Next, compile the C++ Gazebo plugins using `catkin build`. 
-
-    cd ~/catkin_ws/
-    catkin build
+```
+cd ~/catkin_ws/
+catkin build
+```
 
 After some time, the build process should display that all the packages have succeeded.   
 
@@ -91,8 +97,9 @@ Once done, as usual, (and everytime you re-run `catkin build`)
     source ~/catkin_ws/devel/setup.bash 
 
 Alternatively, if you run
-
-    echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+```
+echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+```
 
 then this source command will execute every time a new terminal is open.
 
@@ -101,8 +108,9 @@ then this source command will execute every time a new terminal is open.
 
 ### Testing - Simulating the IFO-S in Gazebo, running PX4 and ROS.
 Now, with all the bare minimum code compiled, we should be ready to run simulation. There's actually one more setup script we need to run which simply adds a bunch of gazebo plugins located in the `~/PX4-Autopilot/` directory to the Gazebo plugin search path. 
-
-    source ~/catkin_ws/src/ifo_gazebo/ifo_gazebo/setup_ifo_gazebo.bash ~/PX4-Autopilot
+```
+source ~/catkin_ws/src/ifo_gazebo/ifo_gazebo/setup_ifo_gazebo.bash ~/PX4-Autopilot
+```
 
 > Note: the above command needs to be run for every new terminal that needs to run the following launch file. 
 >
