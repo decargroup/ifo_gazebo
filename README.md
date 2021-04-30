@@ -113,7 +113,9 @@ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 then this source command will execute every time a new terminal is open.
 
-> Note: From now on, and forever, you should use `catkin build` instead of `catkin_make` to build a ROS workspace. Its newer, prettier, and more versatile. Check out the [documentation for catkin](https://catkin-tools.readthedocs.io/en/latest/verbs/catkin_build.html).
+
+>**Note:  From now on, and forever, you should use `catkin build` instead of `catkin_make` to build a ROS workspace. Its newer, prettier, and more versatile. Check out the [documentation for catkin](https://catkin-tools.readthedocs.io/en/latest/verbs/catkin_build.html).**
+
 
 
 ### Testing - Simulating the IFO-S in Gazebo, running PX4 and ROS.
