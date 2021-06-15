@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+    <!-- MAIN ifo_gazebo SITL LAUNCH FILE  -->
     <!-- Posix SITL environment launch script -->
     <!-- launches PX4 SITL, Gazebo environment, and spawns vehicle -->
     <arg name="px4_clone_dir" default="~/PX4-Autopilot" />
@@ -11,9 +12,10 @@
     <arg name="R" default="0"/>
     <arg name="P" default="0"/>
     <arg name="Y" default="0"/>
+
     <!-- vehicle model and world -->
     <arg name="est" default="ekf2"/>
-    <arg name="vehicle" default="iris"/>
+    <arg name="vehicle" default="iris"/> <!-- IRIS physical properties-->
     <arg name="sdf" default="$(find ifo_gazebo)/models/ifo/ifo.sdf"/>
     <env name="PX4_SIM_MODEL" value="$(arg vehicle)" />
     <env name="PX4_ESTIMATOR" value="$(arg est)" />
@@ -24,18 +26,13 @@
     <arg name="verbose" default="true"/>
     <arg name="paused" default="false"/>
     <arg name="respawn_gazebo" default="false"/>
+
     <!-- PX4 configs -->
     <arg name="interactive" default="true"/>
 
     <!-- MAVROS configs -->
     <arg name="fcu_url" default="udp://:14540@localhost:14557"/>
     <arg name="respawn_mavros" default="false"/>
-
-    <!-- Remap topics for convenience 
-    <remap from="/mavros/imu/data_raw" to="/ifo/imu/data_raw"/>
-    <remap from="/mavros/imu/mag" to="/ifo/mag/data_raw"/>
-    <remap from="/mavros/px4flow/ground_distance" to="/ifo/height/data_raw"/>
-    <remap from="/mavros/px4flow/optical_flow_rad" to="/ifo/optical_flow/data_raw_rad"/>-->
 
     <!-- PX4 SITL -->
     <arg unless="$(arg interactive)" name="px4_command_arg1" value="-d"/>
@@ -63,8 +60,6 @@
         <arg name="fcu_url" value="$(arg fcu_url)"/>
         <arg name="respawn_mavros" value="$(arg respawn_mavros)"/>
     </include>
-
-
 
 </launch>
 

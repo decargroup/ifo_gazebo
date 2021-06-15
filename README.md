@@ -78,7 +78,7 @@ Clone the `ifo_gazebo` repo under `~/catkin_ws/src/`
 cd ~/catkin_ws/src/
 git clone https://YOUR_USERNAME@bitbucket.org/decargroup/ifo_gazebo.git
 ```
-(Side note: the above URL is for an HTTPS login to the remote git repo, using SSH-keys when using git is very convenient and recommended.)
+>Note: the above URL is for an HTTPS login to the remote git repo, using SSH-keys when using git is very convenient and recommended.)
 
 Next, compile the C++ Gazebo plugins using `catkin build`.
 
@@ -89,9 +89,9 @@ catkin build
 
 After some time, the build process should display that all the packages have succeeded.   
 
-> Note: This may also build the `mavros` source that was added to the `~/catkin_ws/src/` directory by the `ubuntu_sim_ros_melodic.sh` script. This can again take a while and fail a few times due to running out of memory. You should just retry with all other apps closed if this is the case. Currently, we have no intention of modifying the `mavros` source, and we can try deleting the folder under  `~/catkin_ws/src/` and simply installing `mavros` as a regular ros package with 
+> Note: This may also build the `mavros` source that was added to the `~/catkin_ws/src/` directory by the `ubuntu_sim_ros_melodic.sh` script. This can again take a while and fail a few times due to running out of memory. You should just retry with all other apps closed if this is the case. Currently, we have no intention of modifying the `mavros` source, and we can try deleting the folder under  `~/catkin_ws/src/` and simply installing `mavros` as a regular ros package with
 > 
->     sudo apt-get install ros-kinetic-mavros ros-kinetic-mavros-extras
+>     sudo apt-get install ros-melodic-mavros ros-melodic-mavros-extras
 >
 >     wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
 >
@@ -319,3 +319,59 @@ $ rostopic list
 /tf
 /tf_static
 ```
+
+# Version 2: Fully portable
+In this version we moved the `PX4-Autopilot` repo to be a submodule of this repo. This allows the PX4 directory to be fixed relative to the gazebo model, which simplifies the simulator start-up procedure since the user no longer needs to specify the location of PX4 source code. The `PX4-Autopilot` repo has lots of submodules itself, so it is critical to clone this repo with the `--recursive` flag. Start by creating the folder `~/catkin_ws/src/`. Then
+
+    cd ~/catkin_ws/src
+    git clone https://bitbucket.org/decargroup/ifo_gazebo.git --recursive
+
+Feel free to change the above URL to one appropriate for SSH-keys. Alternatively, you can clone this repo regularly and then run `git submodule update --init --recursive`.
+
+Next, we must blacklist the `PX4-Autopilot` directory in the catkin tools, so that the `catkin build` command does not compile the PX4 source code (since it fails). PX4 must be built manually. While inside your catkin workspac, add the `px4` package to the blacklist,
+
+    catkin config --blacklist px4
+
+You can now run 
+
+    catkin build
+
+and test to see that all the packages get built successfully, with the px4 package being skipped. To compile PX4 manually, we must first install the toolchain. Thankfully PX4 provides an install script which installs everything required
+
+    bash ~/catkin_ws/src/PX4-Autopilot/Tools/setup/ubuntu.sh
+
+Then, build the PX4 code. 
+
+    cd ~/catkin_ws/src/ifo_gazebo/PX4-Autopilot
+    make px4_sitl gazebo
+
+This can take a long time, and can fail multiple times. The reason of failure is apparently due to your computer running out of RAM. Nevertheless, the build process gets a little further every time, so the solution is just to keep running `make px4_sitl gazebo` until it succeeds. Close all other programs to make it go faster. Once successful, you should see the PX4 app start up in the terminal and the Gazebo GUI launching. You should only need to do this build step once, provided that you never modify the PX4 source code. Next, the PX4 documentation conveniently provides an install script which will install all the required software for ROS/Gazebo simulation including ROS Melodic, Gazebo 9, MAVROS and more
+
+    wget https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_melodic.sh
+    bash ubuntu_sim_ros_melodic.sh
+
+Note that this will create two additional folders: `~/catkin_ws/src/mavros/` and `~/catkin_ws/src/mavros_extras/`. __Delete these folders completely,__ since at this point we have no intention of modifying the `mavros` and `mavros_extras` ROS packages, and there is no need to recompile them every time we run `catkin build`. Instead, we will just install these packages like regular ROS packages with 
+
+    sudo apt-get install ros-melodic-mavros ros-melodic-mavros-extras
+
+As per the official [MAVROS installation instructions](https://github.com/mavlink/mavros/tree/master/mavros#installation), we also need to install some geographic dataset dependency for proper reference frame conversions.
+
+``` bash
+cd ~
+wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+./install_geographiclib_datasets.sh
+rm install_geographiclib_datasets.sh     # Delete the file once done.
+```
+
+Finally, we need to source the usual setup script in `catkin_ws/devel/setup.bash`, but also a custom script `setup_ifo_gazebo.bash` located in this repo, which manually specifies the paths to relevant dependencies inside the PX4 source using environment variables. These two scripts need to be run for every new terminal. Alternatively, adding them to `~/.bashrc` will automatically execute them with every new terminal
+
+``` bash
+echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+echo "source ~/catkin_ws/src/ifo_gazebo/setup_ifo_gazebo.bash suppress" >> ~/.bashrc
+```
+
+Then, you should be ready to fire up the simulator
+
+    roslaunch ifo_gazebo ifo_empty_world.launch
+
+The PX4 app should be running in the terminal, and the Gazebo GUI should have started, displaying a single quadcopter located at the origin.

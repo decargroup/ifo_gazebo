@@ -1,3 +1,4 @@
+<!-- Starts gazebo with an empty world. -->
 <?xml version="1.0"?>
 <launch>
 

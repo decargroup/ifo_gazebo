@@ -1,3 +1,4 @@
+<!-- Starts MAVROS specifically intended for SITL simulation. -->
 <launch>
         <!-- vim: set ft=xml noet : -->
         <!-- example launch script for PX4 based FCU's -->
