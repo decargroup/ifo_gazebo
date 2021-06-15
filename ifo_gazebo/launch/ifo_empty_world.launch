@@ -41,7 +41,7 @@
         args="$(find px4)/build/px4_sitl_default/etc -s etc/init.d-posix/rcS $(arg px4_command_arg1)" required="true"/>
 
     <!-- Gazebo sim -->
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <include file="$(find ifo_gazebo)/launch/empty_world.launch">
         <arg name="gui" value="$(arg gui)"/>
         <arg name="debug" value="$(arg debug)"/>
         <arg name="verbose" value="$(arg verbose)"/>
@@ -49,12 +49,12 @@
         <arg name="respawn_gazebo" value="$(arg respawn_gazebo)"/>
     </include>
 
-    <!-- gazebo model -->
+    <!-- gazebo vehicle model -->
     <node name="$(anon vehicle_spawn)" pkg="gazebo_ros" type="spawn_model" 
     output="screen" args="-sdf -file $(arg sdf) -model ifo -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>$
 
     <!-- MAVROS -->
-    <include file="$(find mavros)/launch/px4.launch">
+    <include file="$(find ifo_gazebo)/launch/ifo_mavros.launch">
         <!-- GCS link is provided by SITL -->
         <arg name="gcs_url" value=""/>
         <arg name="fcu_url" value="$(arg fcu_url)"/>

@@ -1,8 +1,7 @@
-<!-- Starts MAVROS specifically intended for SITL simulation. -->
 <launch>
+        <!-- Starts MAVROS specifically intended for SITL simulation. -->
         <!-- vim: set ft=xml noet : -->
         <!-- example launch script for PX4 based FCU's -->
-
         <arg name="fcu_url" default="/dev/ttyACM0:57600" />
         <arg name="gcs_url" default="" />
         <arg name="tgt_system" default="1" />

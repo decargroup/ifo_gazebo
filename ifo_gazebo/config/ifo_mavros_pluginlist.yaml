@@ -1,13 +1,34 @@
 plugin_blacklist:
-# common
-- safety_area
-# extras
+# COMMON
+- safety_area # TODO. might be useful for some experiments.
+# EXTRAS: https://github.com/mavlink/mavros/blob/master/mavros_extras/README.md
+- adsb
 - image_pub
 - vibration
-- distance_sensor
+#- distance_sensor
 - rangefinder
 - wheel_odometry
-
+- 3dr_radio
+- actuator_control
+- hil_controls # TODO. we might need this in the future
+- ftp
+- vfr_hud
+- cam_imu_sync # TODO. we might need this if we integrate the realsense
+- vision_pose_estimate # TODO. we might need this if we integrate the realsense
+- vision_speed_estimate
+- hil
+- gps_rtk
+- wind_estimation
+- rallypoint
+- play_tune
+- mount_control
+- log_transfer
+- odom 
+- trajectory
+- servo_state_publisher
+- landing_target
+- geofence
+- fake_gps # TODO. potentially an option with the mocap
 
 plugin_whitelist: []
 #- 'sys_*'

@@ -1,6 +1,5 @@
-# Common configuration for PX4 autopilot
-#
-# node:
+# Charles: I dont really know what this file does.
+# Common configuration for PX4 autopilot node:
 startup_px4_usb_quirk: true
 
 # --- system plugins ---

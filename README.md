@@ -350,7 +350,7 @@ This can take a long time, and can fail multiple times. The reason of failure is
     wget https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_melodic.sh
     bash ubuntu_sim_ros_melodic.sh
 
-Note that this will create two additional folders: `~/catkin_ws/src/mavros/` and `~/catkin_ws/src/mavros_extras/`. __Delete these folders completely,__ since at this point we have no intention of modifying the `mavros` and `mavros_extras` ROS packages, and there is no need to recompile them every time we run `catkin build`. Instead, we will just install these packages like regular ROS packages with 
+Note that this will create two additional folders: `~/catkin_ws/src/mavros/` and `~/catkin_ws/src/mavros_extras/` (and maybe some other new folders?). __Delete these folders completely,__ since at this point we have no intention of modifying the `mavros` and `mavros_extras` ROS packages, and there is no need to recompile them every time we run `catkin build`. Instead, we will just install these packages like regular ROS packages with 
 
     sudo apt-get install ros-melodic-mavros ros-melodic-mavros-extras
 
