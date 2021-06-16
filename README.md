@@ -93,4 +93,8 @@ Restart your terminal. Then, you should be ready to fire up the simulator
 
     roslaunch ifo_gazebo ifo_empty_world.launch
 
-The PX4 app should be running in the terminal, and the Gazebo GUI should have started, displaying a single quadcopter located at the origin. You can run `rostopic list` and you should see a large list of topics.
+The PX4 app should be running in the terminal, and the Gazebo GUI should have started, displaying a single quadcopter located at the origin. You can run `rostopic list` and you should see a large list of topics. You can see it in action by typing
+
+    commander takeoff
+    
+in the same terminal you used to type the previous command (the one with all the PX4 printout). Watch the quadcopter take off and immediately land! You can also open a second terminal and type `rostopic echo /mavros/local_position/pose` to view the state estimate in real time.
