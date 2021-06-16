@@ -28,7 +28,7 @@ The repos `ifo_hardware` and `ifo_gazebo` (i.e. this repo) are analogies/replace
 
 
 # Getting Started
-In this version we moved the `PX4-Autopilot` repo to be a submodule of this repo. This allows the PX4 directory to be fixed relative to the gazebo model, which simplifies the simulator start-up procedure since the user no longer needs to specify the location of PX4 source code. The `PX4-Autopilot` repo has lots of submodules itself, so it is critical to clone this repo with the `--recursive` flag. Start by creating the folder `~/catkin_ws/src/`. Then
+In this version we moved the `PX4-Autopilot` repo to be a submodule of this repo. This allows the PX4 directory to be fixed relative to the gazebo model, which simplifies the simulator start-up procedure since the user no longer needs to specify the location of PX4 source code. Moreover, this fixes the exact version of `PX4-Autopilot`, meaning this repo will not break if the PX4 developers push a new commit to the `PX-Autopilot` repo. The `PX4-Autopilot` repo has lots of submodules itself, so it is critical to clone this repo with the `--recursive` flag. Start by creating the folder `~/catkin_ws/src/`. Then
 
     cd ~/catkin_ws/src
     git clone https://bitbucket.org/decargroup/ifo_gazebo.git --recursive
