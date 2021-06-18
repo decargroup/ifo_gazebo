@@ -26,6 +26,7 @@
     <arg name="verbose" default="true"/>
     <arg name="paused" default="false"/>
     <arg name="respawn_gazebo" default="false"/>
+    <arg name="mocap" default="true"/>
 
     <!-- PX4 configs -->
     <arg name="interactive" default="true"/>
@@ -52,6 +53,13 @@
     <!-- gazebo vehicle model -->
     <node name="$(anon vehicle_spawn)" pkg="gazebo_ros" type="spawn_model" 
     output="screen" args="-sdf -file $(arg sdf) -model ifo -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>$
+
+    <!-- Mocap VRPN Emulation -->
+    <group if="$(arg mocap)">
+        <!-- Custom node to emulate exact output of vrpn_client_node 
+        http://wiki.ros.org/vrpn_client_ros -->
+        <node name="vrpn_client_node" pkg="ifo_gazebo" type="mocap_gazebo_node.py"/>
+    </group>
 
     <!-- MAVROS -->
     <include file="$(find ifo_gazebo)/launch/ifo_mavros.launch">
