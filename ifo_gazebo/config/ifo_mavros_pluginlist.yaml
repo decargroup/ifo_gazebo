@@ -14,8 +14,6 @@ plugin_blacklist:
 - ftp
 - vfr_hud
 - cam_imu_sync # TODO. we might need this if we integrate the realsense
-- vision_pose_estimate # TODO. we might need this if we integrate the realsense
-- vision_speed_estimate
 - hil
 - gps_rtk
 - wind_estimation
@@ -32,3 +30,5 @@ plugin_blacklist:
 
 plugin_whitelist: []
 #- 'sys_*'
+#- vision_pose_estimate # NEEDED when using mocap. 
+#- vision_speed_estimate
