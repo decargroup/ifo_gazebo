@@ -7,6 +7,8 @@
     <arg name="ID_1" default="0"/>
     <arg name="vehicle_name_2" default="ifo002"/>
     <arg name="ID_2" default="1"/>
+    <arg name="vehicle_name_3" default="ifo003"/>
+    <arg name="ID_3" default="2"/>
 
     <!-- gazebo configs -->
     <arg name="gui" default="true"/>
@@ -51,7 +53,7 @@
 
     <group ns="$(arg vehicle_name_2)">
         <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
-            <arg name="x" value="1"/>
+            <arg name="x" value="2"/>
             <arg name="y" value="0"/>
             <arg name="z" value="0"/>
             <arg name="R" value="0"/>
@@ -59,6 +61,19 @@
             <arg name="Y" value="0"/>
             <arg name="ID" value="$(arg ID_2)"/>
             <arg name="vehicle_name" value="$(arg vehicle_name_2)"/>
+        </include>
+    </group>
+
+    <group ns="$(arg vehicle_name_3)">
+        <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
+            <arg name="x" value="-2"/>
+            <arg name="y" value="0"/>
+            <arg name="z" value="0"/>
+            <arg name="R" value="0"/>
+            <arg name="P" value="0"/>
+            <arg name="Y" value="0"/>
+            <arg name="ID" value="$(arg ID_3)"/>
+            <arg name="vehicle_name" value="$(arg vehicle_name_3)"/>
         </include>
     </group>
 
