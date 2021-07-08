@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- MAIN ifo_gazebo SITL LAUNCH FILE  -->
+    <!-- Posix SITL environment launch script -->
+    <!-- launches PX4 SITL, Gazebo environment, and spawns vehicle -->
+    <arg name="vehicle_name_1" default="ifo001"/>
+    <arg name="vehicle_name_2" default="ifo002"/>
+
+    <!-- gazebo configs -->
+    <arg name="gui" default="true"/>
+    <arg name="debug" default="false"/>
+    <arg name="verbose" default="true"/>
+    <arg name="paused" default="false"/>
+    <arg name="respawn_gazebo" default="false"/>
+    <arg name="emulate_mocap" default="true"/>
+
+    <!-- =================================================================== -->
+    <!-- Start Gazebo with an empty world -->
+    <include file="$(find ifo_gazebo)/launch/empty_world.launch">
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="debug" value="$(arg debug)"/>
+        <arg name="verbose" value="$(arg verbose)"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="respawn_gazebo" value="$(arg respawn_gazebo)"/>
+    </include>
+
+    <!-- Mocap VRPN Emulation -->
+    <group if="$(arg emulate_mocap)">
+        <!-- Custom node to emulate exact output of vrpn_client_node 
+        http://wiki.ros.org/vrpn_client_ros -->
+        <node name="vrpn_client_node" pkg="ifo_gazebo" type="mocap_gazebo_node.py"/>
+    </group>
+
+    <!-- =================================================================== -->
+    <!-- ======================== SPAWN THE DRONES ========================= -->
+    <!-- =================================================================== -->
+    <group ns="$(arg vehicle_name_1)">
+        <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
+            <arg name="x" value="0"/>
+            <arg name="y" value="0"/>
+            <arg name="z" value="0"/>
+            <arg name="R" value="0"/>
+            <arg name="P" value="0"/>
+            <arg name="Y" value="0"/>
+            <arg name="mavlink_udp_port" value="14560"/>
+            <arg name="mavlink_tcp_port" value="4560"/>
+            <arg name="vehicle_ID" value="1"/>
+            <arg name="vehicle_name" value="$(arg vehicle_name_1)"/>
+            <arg name="fcu_url" default="udp://:14540@localhost:14580"/>
+        </include>
+    </group>
+    
+    <group ns="$(arg vehicle_name_2)">
+        <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
+            <arg name="x" value="1"/>
+            <arg name="y" value="0"/>
+            <arg name="z" value="0"/>
+            <arg name="R" value="3.1415"/>
+            <arg name="P" value="0"/>
+            <arg name="Y" value="0"/>
+            <arg name="mavlink_udp_port" value="14561"/>
+            <arg name="mavlink_tcp_port" value="4561"/>
+            <arg name="vehicle_ID" value="2"/>
+            <arg name="vehicle_name" value="$(arg vehicle_name_2)"/>
+            <arg name="fcu_url" default="udp://:14541@localhost:14581"/>
+        </include>
+    </group>
+
+
+</launch>
+
+
+
+
+
+
+
+  

@@ -121,7 +121,7 @@
       </sensor>
     </link>
     
-    <plugin name="realsense" filename="librealsense_gazebo_plugin.so">
+    <plugin name="/ifo001/realsense" filename="librealsense_gazebo_plugin.so">
       <depthUpdateRate>30.0</depthUpdateRate>
       <colorUpdateRate>30.0</colorUpdateRate>
       <infraredUpdateRate>30.0</infraredUpdateRate>

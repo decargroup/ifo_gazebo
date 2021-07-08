@@ -98,3 +98,8 @@ The PX4 app should be running in the terminal, and the Gazebo GUI should have st
     commander takeoff
     
 in the same terminal you used to type the previous command (the one with all the PX4 printout). Watch the quadcopter take off and immediately land! You can also open a second terminal and type `rostopic echo /mavros/local_position/pose` to view the state estimate in real time.
+
+## Multi-agent simulation
+Need a dependency
+
+    sudo apt install xmlstarlet

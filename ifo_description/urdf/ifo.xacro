@@ -1,0 +1,10 @@
+<?xml version="1.0"?> 
+<robot name='ifo' xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:arg name="mavlink_tcp_port" default="4560" />
+    <xacro:arg name="mavlink_udp_port" default="14560" />
+
+    <!-- Include base -->
+    <xacro:include filename="$(find ifo_description)/urdf/ifo_base.xacro" />
+    <xacro:ifo_base_macro mavlink_tcp_port="$(arg mavlink_tcp_port)" mavlink_udp_port="$(arg mavlink_udp_port)"/>
+</robot>
