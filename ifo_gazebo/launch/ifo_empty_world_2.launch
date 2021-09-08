@@ -26,13 +26,6 @@
         <arg name="respawn_gazebo" value="$(arg respawn_gazebo)"/>
     </include>
 
-    <!-- Mocap VRPN Emulation -->
-    <group if="$(arg emulate_mocap)">
-        <!-- Custom node to emulate exact output of vrpn_client_node 
-        http://wiki.ros.org/vrpn_client_ros -->
-        <node name="vrpn_client_node" pkg="ifo_gazebo" type="mocap_gazebo_node.py"/>
-    </group>
-
     <!-- =================================================================== -->
     <!-- ======================== SPAWN THE DRONES ========================= -->
     <!-- =================================================================== -->

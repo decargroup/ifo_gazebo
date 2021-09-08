@@ -10,6 +10,7 @@
     <arg name="Y" default="0"/>
     <arg name="vehicle_name" default="ifo001"/>
     <arg name="ID" default="1"/>
+    <arg name="emulate_mocap" default="true"/>
 
     <!-- vehcile model and config -->
     <arg name="est" default="ekf2"/>
@@ -31,6 +32,13 @@
     <arg name="fcu_url" default="$(arg _temp1)$(arg _temp2)$(arg _temp3)$(arg _temp4)"/>
 
     <!-- ================================================================== -->
+    <!-- Mocap VRPN Emulation -->
+    <group if="$(arg emulate_mocap)">
+        <!-- Custom node to emulate exact output of vrpn_client_node 
+        http://wiki.ros.org/vrpn_client_ros -->
+        <node name="vrpn_client_node" pkg="ifo_gazebo" type="mocap_gazebo_node.py"/>
+    </group>
+
     <!-- PX4 SITL -->
     <arg unless="$(arg interactive)" name="px4_command_arg1" value="-d"/>
     <arg     if="$(arg interactive)" name="px4_command_arg1" value=""/>

@@ -14,13 +14,6 @@
         <arg name="verbose" value="$(arg verbose)"/>
         <arg name="paused" value="$(arg paused)"/>
     </include>
-
-    <!-- Mocap VRPN Emulation -->
-    <group if="$(arg emulate_mocap)">
-        <!-- Custom node to emulate exact output of vrpn_client_node 
-        http://wiki.ros.org/vrpn_client_ros -->
-        <node name="vrpn_client_node" pkg="ifo_gazebo" type="mocap_gazebo_node.py"/>
-    </group>
     
     <!-- ================================================================== -->
     <!-- Spawn vehicles-->
