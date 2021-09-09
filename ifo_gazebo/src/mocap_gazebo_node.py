@@ -31,8 +31,12 @@ class MocapSimulatorNode(object):
 
     def wait_for_first_message(self):
         rate = rospy.Rate(10)
-        while self.model_states is None:
-            rate.sleep()
+        while self.model_states is None and not rospy.is_shutdown():
+            try:  # prevent garbage in console output when thread is killed
+                rate.sleep()
+            except rospy.ROSInterruptException:
+                pass
+
             
     def cb_model_states(self, model_states_msg):
         self.timestamp = rospy.Time.now()
@@ -59,11 +63,14 @@ class MocapSimulatorNode(object):
 
     def start(self):
         rate = rospy.Rate(100) #Hz TODO. Make a parameter.
-        while True:
+        while not rospy.is_shutdown():
             self.publish_poses()
-            rate.sleep()
-
+            try:  # prevent garbage in console output when thread is killed
+                rate.sleep()
+            except rospy.ROSInterruptException:
+                pass
 
 if __name__ == "__main__":
     node = MocapSimulatorNode()
     node.start()
+    rospy.spin()
