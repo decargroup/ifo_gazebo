@@ -64,6 +64,7 @@ See PX4's [Ubuntu Development Environment instructions](https://docs.px4.io/mast
 ### Installing ROS, Gazebo, MAVROS
  Next, the PX4 documentation conveniently provides an install script which will install all the required software for ROS/Gazebo simulation including ROS Melodic, Gazebo 9, MAVROS and more
 
+    cd ~
     wget https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_melodic.sh
     bash ubuntu_sim_ros_melodic.sh
 
@@ -91,15 +92,10 @@ echo "source ~/catkin_ws/src/ifo_gazebo/setup_ifo_gazebo.bash suppress" >> ~/.ba
 ```
 Restart your terminal. Then, you should be ready to fire up the simulator
 
-    roslaunch ifo_gazebo ifo_empty_world.launch
+    roslaunch ifo_gazebo ifo_empty_world_1.launch
 
 The PX4 app should be running in the terminal, and the Gazebo GUI should have started, displaying a single quadcopter located at the origin. You can run `rostopic list` and you should see a large list of topics. You can see it in action by typing
 
     commander takeoff
     
 in the same terminal you used to type the previous command (the one with all the PX4 printout). Watch the quadcopter take off and immediately land! You can also open a second terminal and type `rostopic echo /mavros/local_position/pose` to view the state estimate in real time.
-
-## Multi-agent simulation
-Need a dependency
-
-    sudo apt install xmlstarlet
