@@ -4,3 +4,6 @@
 [submodule "PX4-Autopilot"]
 	path = PX4-Autopilot
 	url = https://github.com/PX4/PX4-Autopilot.git
+[submodule "realsense_gazebo_description"]
+	path = realsense_gazebo_description
+	url = https://github.com/CharlesCossette/realsense_gazebo_description.git

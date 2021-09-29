@@ -19,7 +19,7 @@
     <!-- Spawn vehicles-->
     <!-- Spawn vehicle -->
     <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
-        <arg name="interactive" value="false"/>
+        <arg name="interactive" value="true"/>
     </include>
 
     

@@ -7,4 +7,10 @@
     <!-- Include base -->
     <xacro:include filename="$(find ifo_description)/urdf/ifo_base.xacro" />
     <xacro:ifo_base_macro mavlink_tcp_port="$(arg mavlink_tcp_port)" mavlink_udp_port="$(arg mavlink_udp_port)"/>
+
+    <!-- Include realsense -->
+    <xacro:include filename="$(find realsense_gazebo_description)/urdf/_d435i.urdf.xacro"/>
+    <xacro:sensor_d435i parent="base_link">
+        <origin xyz="0.10 0 0" rpy="0 0 0" />
+    </xacro:sensor_d435i>
 </robot>
