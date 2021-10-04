@@ -1,7 +1,7 @@
 # Simulating the Uvify IFO-S Locally with Gazebo/ROS
 
 [TOC] 
-
+![./docs/gazebo_vs_real_flight.gif](./docs/gazebo_vs_real_flight.gif) 
 ![./docs/ifo_visual.png](./docs/ifo_visual.png) 
 
 This repo is a collection of ROS packages, Gazebo models, Gazebo plugins, as well as the `PX4-Autopilot` source code contained as a git submodule. It does not contain the Gazebo simulator itself, or ROS. These are all dependencies that must be installed as per the instructions below.
