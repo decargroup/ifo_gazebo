@@ -40,7 +40,8 @@
             <arg name="P" value="0"/>
             <arg name="Y" value="0"/>
             <arg name="ID" value="$(arg ID_1)"/>
-            <arg name="vehicle_name" value="$(arg vehicle_name_1)"/>
+            <arg name="vehicle_name_gazebo" value="$(arg vehicle_name_1)"/>
+            <arg name="namespace" value="$(arg vehicle_name_1)"/>
         </include>
     </group>
 
@@ -53,7 +54,8 @@
             <arg name="P" value="0"/>
             <arg name="Y" value="0"/>
             <arg name="ID" value="$(arg ID_2)"/>
-            <arg name="vehicle_name" value="$(arg vehicle_name_2)"/>
+            <arg name="vehicle_name_gazebo" value="$(arg vehicle_name_2)"/>
+            <arg name="namespace" value="$(arg vehicle_name_2)"/>
         </include>
     </group>
 
@@ -66,7 +68,8 @@
             <arg name="P" value="0"/>
             <arg name="Y" value="0"/>
             <arg name="ID" value="$(arg ID_3)"/>
-            <arg name="vehicle_name" value="$(arg vehicle_name_3)"/>
+            <arg name="vehicle_name_gazebo" value="$(arg vehicle_name_3)"/>
+            <arg name="namespace" value="$(arg vehicle_name_3)"/>
         </include>
     </group>
 

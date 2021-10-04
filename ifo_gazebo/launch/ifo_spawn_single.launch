@@ -8,7 +8,8 @@
     <arg name="R" default="0"/>
     <arg name="P" default="0"/>
     <arg name="Y" default="0"/>
-    <arg name="vehicle_name" default="ifo001"/> <!--TODO: should be default blank-->
+    <arg name="namespace" default=""/> <!--TODO: should be default blank-->
+    <arg name="vehicle_name_gazebo" default="ifo001"/>
     <arg name="ID" default="1"/>
     <arg name="emulate_mocap" default="true"/>
 
@@ -46,8 +47,8 @@
     </node>
 
     <!-- spawn vehicle -->
-    <param name="robot_description" command="xacro $(find ifo_description)/urdf/ifo.xacro mavlink_udp_port:=$(arg mavlink_udp_port) mavlink_tcp_port:=$(arg mavlink_tcp_port) namespace:=$(arg vehicle_name)" />
-    <node name="ifo_$(arg ID)_spawn" output="screen" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model $(arg vehicle_name) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
+    <param name="robot_description" command="xacro $(find ifo_description)/urdf/ifo.xacro mavlink_udp_port:=$(arg mavlink_udp_port) mavlink_tcp_port:=$(arg mavlink_tcp_port) namespace:=$(arg namespace)" />
+    <node name="ifo_$(arg ID)_spawn" output="screen" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model $(arg vehicle_name_gazebo) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
 
     <!-- MAVROS -->
     <include file="$(find mavros)/launch/px4.launch">

@@ -11,7 +11,7 @@
 
     <!-- Include realsense -->
     <xacro:include filename="$(find realsense_gazebo_description)/urdf/_d435i.urdf.xacro"/>
-    <xacro:sensor_d435i name="realsense" topics_ns="$(arg namespace)/realsense" parent="base_link" accel_fps="200" gyro_fps="200">
+    <xacro:sensor_d435i name="$(arg namespace)/realsense" topics_ns="$(arg namespace)/realsense" parent="base_link" accel_fps="200" gyro_fps="200">
         <origin xyz="0.10 0 0" rpy="0 0 0" />
     </xacro:sensor_d435i>
 </robot>
