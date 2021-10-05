@@ -23,6 +23,7 @@ class MocapSimulatorNode(object):
                                                    
     def create_publishers(self, model_names):
         for model in model_names:
+            model.replace(" ","_") 
             if model != "ground_plane":
                 self.pubs[model] = rospy.Publisher(
                                     'vrpn_client_node/' + model + '/pose',
