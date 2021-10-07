@@ -1,0 +1,259 @@
+<?xml version="1.0"?> 
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:macro name="realsense_d435i">
+
+
+  <link name="camera_link">
+    <!-- Visual rendering-->
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707 0 1.5707" />
+      <geometry>
+        <mesh filename="package://ifo_description/meshes/d435.dae" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="camera_joint" type="fixed">
+    <origin xyz="0.12 0 0" rpy="0 0 0" />
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+  </joint>
+  
+  <gazebo reference="camera_link">
+    <self_collide>0</self_collide>
+    <kinematic>0</kinematic>
+    <gravity>0</gravity>
+    <visual>
+      <cast_shadows>1</cast_shadows>
+    </visual>
+    <inertial>
+      <mass> 0.0000001 </mass>
+      <inertia> 
+        <ixx> 1e-10 </ixx>
+        <iyy> 1e-10 </iyy>
+        <izz> 1e-10 </izz>
+      </inertia>
+    </inertial>
+
+    
+  
+
+    <!-- =================================================================== -->
+    <!--                                 IMU                                 -->
+    <!-- =================================================================== -->
+    
+    <sensor name="imu_sensor" type="imu">
+      <!-- Rotate and translate IMU to be same as real realsense-->
+      <!-- Frame is y up, z forward-->
+      <pose>-0.0051 0.01195 -0.01174 -1.5707 0 -1.5707</pose>
+      <always_on>1</always_on>
+      <update_rate>100.0</update_rate>
+      <topic>/camera/imu</topic>
+      <imu>
+        <angular_velocity>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>0.0001</bias_stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>0.0001</bias_stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>0.0001</bias_stddev>
+            </noise>
+          </z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>0.0001</bias_stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>0.0001</bias_stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>0.0001</bias_stddev>
+            </noise>
+          </z>
+        </linear_acceleration>
+      </imu>
+
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <robotNamespace></robotNamespace>
+        <topicName>camera/imu</topicName>
+        <bodyName>camera_link</bodyName>
+        <updateRateHZ>200.0</updateRateHZ>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>camera_link</frameName>
+      </plugin>
+    </sensor>
+
+    <!-- =================================================================== -->
+    <!--                              CAMERAS                                -->
+    <!-- =================================================================== -->
+    <!-- Realsense colour camera-->
+    <sensor name="camera_color" type="camera">
+      <pose>0 -0.0115 0 0 0 0</pose>
+      <camera name="camera">
+        <horizontal_fov>1.211259</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>RGB_INT8</format>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <always_on>1</always_on>
+      <update_rate>15</update_rate>
+      <visualize>0</visualize>
+    </sensor>
+
+    <!-- Realsense infrared camera 1 (left)-->
+    <sensor name="camera_ired1" type="camera">
+      <pose>0 0.0175 0 0 0 0</pose>
+      <camera name="camera">
+        <horizontal_fov>1.487021</horizontal_fov>
+        <image>
+          <width>1280</width>
+          <height>720</height>
+          <format>L_INT8</format>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.05</stddev>
+        </noise>
+      </camera>
+      <always_on>1</always_on>
+      <update_rate>15</update_rate>
+      <visualize>0</visualize>
+    </sensor>
+
+    <!-- Realsense infrared camera 2 (right)-->
+    <sensor name="camera_ired2" type="camera">
+      <pose>0 -0.0325 0 0 0 0</pose>
+      <camera name="camera">
+        <horizontal_fov>1.487021</horizontal_fov>
+        <image>
+          <width>1280</width>
+          <height>720</height>
+          <format>L_INT8</format>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.05</stddev>
+        </noise>
+      </camera>
+      <always_on>1</always_on>
+      <update_rate>15</update_rate>
+      <visualize>0</visualize>
+    </sensor>
+
+    <!-- Realsense depth camera-->
+    <sensor name="camera_depth" type="depth">
+    <pose>0 0.0325 0 0 0 0</pose>
+      <camera name="camera">
+        <horizontal_fov>1.487021</horizontal_fov>
+        <image>
+          <width>1280</width>
+          <height>720</height>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>100</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.100</stddev>
+        </noise>
+      </camera>
+      <always_on>1</always_on>
+      <update_rate>15</update_rate>
+      <visualize>0</visualize>
+    </sensor>
+
+  </gazebo>
+
+
+  <gazebo>
+  <!-- Realsense Plugin -->
+  <plugin name="/camera" filename="librealsense_gazebo_plugin.so">
+    <prefix>camera_</prefix>
+
+    <!-- Color camera settings-->
+    <colorUpdateRate>15.0</colorUpdateRate>
+    <colorTopicName>color/image_raw</colorTopicName>
+    <colorCameraInfoTopicName>color/camera_info</colorCameraInfoTopicName>
+    <colorOpticalframeName>camera_color_optical_frame</colorOpticalframeName>
+
+
+    <!-- Infrared camera settings-->
+    <infraredUpdateRate>15.0</infraredUpdateRate>
+    <infrared1TopicName>infra1/image_raw</infrared1TopicName>
+    <infrared1CameraInfoTopicName>infra1/camera_info</infrared1CameraInfoTopicName>
+    <infrared1OpticalframeName>camera_infrared1_optical_frame</infrared1OpticalframeName>
+    <infrared2TopicName>infra2/image_raw</infrared2TopicName>
+    <infrared2CameraInfoTopicName>infra2/camera_info</infrared2CameraInfoTopicName>
+    <infrared2OpticalframeName>camera_infrared2_optical_frame</infrared2OpticalframeName>
+
+    <!-- Depth camera settings-->
+    <depthUpdateRate>15.0</depthUpdateRate>
+    <depthTopicName>depth/image_raw</depthTopicName>
+    <depthCameraInfoTopicName>depth/camera_info</depthCameraInfoTopicName>
+    <depthOpticalframeName>camera_depth_optical_frame</depthOpticalframeName>
+    <rangeMinDepth>0.1</rangeMinDepth>
+    <rangeMaxDepth>10.0</rangeMaxDepth>
+    <pointCloud>true</pointCloud>
+    <pointCloudTopicName>depth/color/points</pointCloudTopicName>
+    <pointCloudCutoff>0.25</pointCloudCutoff>
+    <pointCloudCutoffMax>9.0</pointCloudCutoffMax>
+  </plugin> 
+  </gazebo>
+
+</xacro:macro>
+</robot>
