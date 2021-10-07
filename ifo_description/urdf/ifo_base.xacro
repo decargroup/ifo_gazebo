@@ -129,7 +129,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>model://ifo_base/meshes/iris_prop_ccw.dae</uri>
+              <uri>$(find ifo_description)/meshes/iris_prop_ccw.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -219,7 +219,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>model://ifo_base/meshes/iris_prop_ccw.dae</uri>
+              <uri>$(find ifo_description)/meshes/iris_prop_ccw.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -309,7 +309,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>model://ifo_base/meshes/iris_prop_cw.dae</uri>
+              <uri>$(find ifo_description)/meshes/iris_prop_cw.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -399,7 +399,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>model://ifo_base/meshes/iris_prop_cw.dae</uri>
+              <uri>$(find ifo_description)/meshes/iris_prop_cw.dae</uri>
             </mesh>
           </geometry>
           <material>

@@ -1,25 +1,27 @@
 <?xml version="1.0"?> 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-<xacro:macro name="realsense_d435i">
+<xacro:macro name="realsense_d435i" params="parent
+                                            *origin
+                                            name:=camera">
 
 
-  <link name="camera_link">
+  <link name="${name}_link">
     <!-- Visual rendering-->
     <visual>
       <origin xyz="0 0 0" rpy="1.5707 0 1.5707" />
       <geometry>
-        <mesh filename="package://ifo_description/meshes/d435.dae" />
+        <mesh filename="$(find ifo_description)/meshes/d435.dae" />
       </geometry>
     </visual>
   </link>
 
-  <joint name="camera_joint" type="fixed">
-    <origin xyz="0.12 0 0" rpy="0 0 0" />
-    <parent link="base_link"/>
-    <child link="camera_link"/>
+  <joint name="${name}_joint" type="fixed">
+    <xacro:insert_block name="origin"/>
+    <parent link="${parent}"/>
+    <child link="${name}_link"/>
   </joint>
   
-  <gazebo reference="camera_link">
+  <gazebo reference="${name}_link">
     <self_collide>0</self_collide>
     <kinematic>0</kinematic>
     <gravity>0</gravity>
@@ -35,9 +37,6 @@
       </inertia>
     </inertial>
 
-    
-  
-
     <!-- =================================================================== -->
     <!--                                 IMU                                 -->
     <!-- =================================================================== -->
@@ -48,7 +47,7 @@
       <pose>-0.0051 0.01195 -0.01174 -1.5707 0 -1.5707</pose>
       <always_on>1</always_on>
       <update_rate>100.0</update_rate>
-      <topic>/camera/imu</topic>
+      <topic>${name}/imu</topic>
       <imu>
         <angular_velocity>
           <x>
@@ -106,12 +105,12 @@
 
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
         <robotNamespace></robotNamespace>
-        <topicName>camera/imu</topicName>
-        <bodyName>camera_link</bodyName>
+        <topicName>${name}/imu</topicName>
+        <bodyName>${name}_link</bodyName>
         <updateRateHZ>200.0</updateRateHZ>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
-        <frameName>camera_link</frameName>
+        <frameName>${name}_link</frameName>
       </plugin>
     </sensor>
 
@@ -119,9 +118,9 @@
     <!--                              CAMERAS                                -->
     <!-- =================================================================== -->
     <!-- Realsense colour camera-->
-    <sensor name="camera_color" type="camera">
+    <sensor name="${name}_color" type="camera">
       <pose>0 -0.0115 0 0 0 0</pose>
-      <camera name="camera">
+      <camera name="${name}">
         <horizontal_fov>1.211259</horizontal_fov>
         <image>
           <width>640</width>
@@ -144,9 +143,9 @@
     </sensor>
 
     <!-- Realsense infrared camera 1 (left)-->
-    <sensor name="camera_ired1" type="camera">
+    <sensor name="${name}_ired1" type="camera">
       <pose>0 0.0175 0 0 0 0</pose>
-      <camera name="camera">
+      <camera name="${name}">
         <horizontal_fov>1.487021</horizontal_fov>
         <image>
           <width>1280</width>
@@ -169,9 +168,9 @@
     </sensor>
 
     <!-- Realsense infrared camera 2 (right)-->
-    <sensor name="camera_ired2" type="camera">
+    <sensor name="${name}_ired2" type="camera">
       <pose>0 -0.0325 0 0 0 0</pose>
-      <camera name="camera">
+      <camera name="${name}">
         <horizontal_fov>1.487021</horizontal_fov>
         <image>
           <width>1280</width>
@@ -194,9 +193,9 @@
     </sensor>
 
     <!-- Realsense depth camera-->
-    <sensor name="camera_depth" type="depth">
+    <sensor name="${name}_depth" type="depth">
     <pose>0 0.0325 0 0 0 0</pose>
-      <camera name="camera">
+      <camera name="${name}">
         <horizontal_fov>1.487021</horizontal_fov>
         <image>
           <width>1280</width>
@@ -222,30 +221,30 @@
 
   <gazebo>
   <!-- Realsense Plugin -->
-  <plugin name="/camera" filename="librealsense_gazebo_plugin.so">
-    <prefix>camera_</prefix>
+  <plugin name="/${name}" filename="librealsense_gazebo_plugin.so">
+    <prefix>${name}_</prefix>
 
     <!-- Color camera settings-->
     <colorUpdateRate>15.0</colorUpdateRate>
     <colorTopicName>color/image_raw</colorTopicName>
     <colorCameraInfoTopicName>color/camera_info</colorCameraInfoTopicName>
-    <colorOpticalframeName>camera_color_optical_frame</colorOpticalframeName>
+    <colorOpticalframeName>${name}_color_optical_frame</colorOpticalframeName>
 
 
     <!-- Infrared camera settings-->
     <infraredUpdateRate>15.0</infraredUpdateRate>
     <infrared1TopicName>infra1/image_raw</infrared1TopicName>
     <infrared1CameraInfoTopicName>infra1/camera_info</infrared1CameraInfoTopicName>
-    <infrared1OpticalframeName>camera_infrared1_optical_frame</infrared1OpticalframeName>
+    <infrared1OpticalframeName>${name}_infrared1_optical_frame</infrared1OpticalframeName>
     <infrared2TopicName>infra2/image_raw</infrared2TopicName>
     <infrared2CameraInfoTopicName>infra2/camera_info</infrared2CameraInfoTopicName>
-    <infrared2OpticalframeName>camera_infrared2_optical_frame</infrared2OpticalframeName>
+    <infrared2OpticalframeName>${name}_infrared2_optical_frame</infrared2OpticalframeName>
 
     <!-- Depth camera settings-->
     <depthUpdateRate>15.0</depthUpdateRate>
     <depthTopicName>depth/image_raw</depthTopicName>
     <depthCameraInfoTopicName>depth/camera_info</depthCameraInfoTopicName>
-    <depthOpticalframeName>camera_depth_optical_frame</depthOpticalframeName>
+    <depthOpticalframeName>${name}_depth_optical_frame</depthOpticalframeName>
     <rangeMinDepth>0.1</rangeMinDepth>
     <rangeMaxDepth>10.0</rangeMaxDepth>
     <pointCloud>true</pointCloud>
