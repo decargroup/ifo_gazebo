@@ -3,7 +3,31 @@
 <xacro:macro name="realsense_d435i" params="parent
                                             *origin
                                             name:=camera">
+  <!-- Realsense D435i macro
+    Calling this macro from a top-level xacro file will include an Intel 
+    Realsense D435i camera, publishing IMU readings as well as color,
+    2 x infrared, and depth image topics.
+      
+    Usage (in a top-level xacro file)
 
+    <xacro:include filename="path/to/realsense_d435i.xacro"/>
+    <xacro:realsense_d435i parent="base_link" name="$(arg namespace)/camera">
+        <origin xyz="0.12 0 0" rpy="0 0 0" />
+    </xacro:realsense_d435i>
+
+    Note that multiple cameras can coexist in a simulation by giving each camera
+    a unique name. 
+
+    TODO
+    - Parameterize everything using params
+    
+    To understand this file you should really look at the URDF tutorials:
+    https://wiki.ros.org/urdf/Tutorials 
+
+    In addition to how to use URDF with Gazebo
+    http://gazebosim.org/tutorials/?tut=ros_urdf 
+
+    -->
 
   <link name="${name}_link">
     <!-- Visual rendering-->

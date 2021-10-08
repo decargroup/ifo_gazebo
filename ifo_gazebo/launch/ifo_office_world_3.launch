@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- MAIN ifo_gazebo SITL LAUNCH FILE  -->
+    <!-- Posix SITL environment launch script -->
+    <!-- launches PX4 SITL, Gazebo environment, and spawns vehicle -->
+    <arg name="vehicle_name_1" default="ifo001"/>
+    <arg name="ID_1" default="0"/>
+    <arg name="vehicle_name_2" default="ifo002"/>
+    <arg name="ID_2" default="1"/>
+    <arg name="vehicle_name_3" default="ifo003"/>
+    <arg name="ID_3" default="2"/>
+
+    <!-- gazebo configs -->
+    <arg name="gui" default="true"/>
+    <arg name="debug" default="false"/>
+    <arg name="verbose" default="true"/>
+    <arg name="paused" default="false"/>
+    <arg name="respawn_gazebo" default="false"/>
+    <arg name="emulate_mocap" default="true"/>
+
+    <!-- =================================================================== -->
+    <!-- Start Gazebo with an empty world -->
+    <include file="$(find ifo_gazebo)/launch/office_world.launch">
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="debug" value="$(arg debug)"/>
+        <arg name="verbose" value="$(arg verbose)"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="respawn_gazebo" value="$(arg respawn_gazebo)"/>
+    </include>
+
+    <!-- =================================================================== -->
+    <!-- ======================== SPAWN THE DRONES ========================= -->
+    <!-- =================================================================== -->
+    <group ns="$(arg vehicle_name_1)">
+        <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
+            <arg name="x" value="0"/>
+            <arg name="y" value="0"/>
+            <arg name="z" value="0"/>
+            <arg name="R" value="0"/>
+            <arg name="P" value="0"/>
+            <arg name="Y" value="0"/>
+            <arg name="ID" value="$(arg ID_1)"/>
+            <arg name="vehicle_name_gazebo" value="$(arg vehicle_name_1)"/>
+            <arg name="namespace" value="$(arg vehicle_name_1)"/>
+        </include>
+    </group>
+
+    <group ns="$(arg vehicle_name_2)">
+        <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
+            <arg name="x" value="0"/>
+            <arg name="y" value="2"/>
+            <arg name="z" value="0"/>
+            <arg name="R" value="0"/>
+            <arg name="P" value="0"/>
+            <arg name="Y" value="0"/>
+            <arg name="ID" value="$(arg ID_2)"/>
+            <arg name="vehicle_name_gazebo" value="$(arg vehicle_name_2)"/>
+            <arg name="namespace" value="$(arg vehicle_name_2)"/>
+        </include>
+    </group>
+
+    <group ns="$(arg vehicle_name_3)">
+        <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
+            <arg name="x" value="0"/>
+            <arg name="y" value="-2"/>
+            <arg name="z" value="0"/>
+            <arg name="R" value="0"/>
+            <arg name="P" value="0"/>
+            <arg name="Y" value="0"/>
+            <arg name="ID" value="$(arg ID_3)"/>
+            <arg name="vehicle_name_gazebo" value="$(arg vehicle_name_3)"/>
+            <arg name="namespace" value="$(arg vehicle_name_3)"/>
+        </include>
+    </group>
+
+</launch>
+
+
+
+
+
+
+
+  
