@@ -102,3 +102,18 @@ The PX4 app should be running in the terminal, and the Gazebo GUI should have st
     commander takeoff
     
 in the same terminal you used to type the previous command (the one with all the PX4 printout). Watch the quadcopter take off and immediately land. You can also open a second terminal and type `rostopic echo /mavros/local_position/pose` to view the state estimate in real time.
+
+### Launching multiple drones
+
+An example can be seen here, which will launch 3 drones.
+
+``` 
+roslaunch ifo_gazebo ifo_empty_world_3.launch
+```
+
+Or alternatively, this can be launch in the Clearpath Office World with
+
+```
+roslaunch ifo_gazebo ifo_office_world_3.launch
+```
+

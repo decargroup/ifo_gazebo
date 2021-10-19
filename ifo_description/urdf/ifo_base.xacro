@@ -11,8 +11,7 @@
       TODO
     - Parameterize everything using xacro:property
     - Add conditional blocks to include certain sensors.
-    - Remove references to old meshes so we can clean  up
-    - Add other sensors
+    - Add remaining sensors
     
     To understand this file you should really look at the URDF tutorials:
     https://wiki.ros.org/urdf/Tutorials 

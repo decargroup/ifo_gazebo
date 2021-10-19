@@ -1,5 +1,7 @@
 <?xml version="1.0"?> 
 <robot name='ifo' xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <!-- This is the main top-level file-->
+    <!-- TODO: add user option to omit realsense for a "lighter" version. -->
 
     <xacro:arg name="mavlink_tcp_port" default="4560" />
     <xacro:arg name="mavlink_udp_port" default="14560" />
