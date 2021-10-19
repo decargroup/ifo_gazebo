@@ -119,4 +119,12 @@ Or alternatively, this can be launch in the Clearpath Office World with
 ```
 roslaunch ifo_gazebo ifo_office_world_3.launch
 ```
+### Changing `master` branch to `main`
+We recently changed the master branch to `main`. If you have an old clone that still has `master` as the default branch, run
 
+```
+git branch -m master main
+git fetch origin
+git branch -u origin/main main
+git remote set-head origin -a
+```
