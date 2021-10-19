@@ -1,13 +1,16 @@
 # Gazebo Model for the Uvify IFO-S with PX4 Software-in-the-Loop
-[TOC] 
+
 ![./docs/gazebo_vs_real_flight.gif](./docs/gazebo_vs_real_flight.gif) 
+Simulated quadcopter vs the real quadcopter, running the same code.
+
 ![./docs/ifo_visual.png](./docs/ifo_visual.png) 
+
 
 This repo is a collection of ROS packages, Gazebo models, Gazebo plugins, as well as the `PX4-Autopilot` source code contained as a git submodule. It does not contain the Gazebo simulator itself, or ROS. These are all dependencies that must be installed as per the instructions below.
 
 Currently, this simulator is intended for Ubuntu 18.04 with ROS Melodic
 
-The repos `ifo_hardware` and `ifo_gazebo` (i.e. this repo) are analogies/replacements of each other, which take care of setting up and providing the interface to the real and simulated IFO quadcopter, respectively. As such, `ifo_hardware` should only ever be cloned on the IFO's Jetson Nano, whilst `ifo_gazebo` should be cloned on your local computer. Any code that is part of a general autonomy stack should be located in other repos and cloned on both the real hardware and the local simulating computer.
+This model uses the [Iris quadcopter model](https://github.com/PX4/PX4-SITL_gazebo/tree/d8366bf2389eae6106d1dbfaac72ebfdf23a5d2d/models/iris) available in the `PX4-SITL_gazebo` repo as a starting point, which is then modified to have the same sensor configuration as the Uvify IFO-S
 
 
 
@@ -89,7 +92,7 @@ rm install_geographiclib_datasets.sh     # Delete the file once done.
 ### Launching the simulator
 Finally, we need to source the usual setup script in `catkin_ws/devel/setup.bash`, but also a custom script `setup_ifo_gazebo.bash` located in this repo, which manually specifies the paths to relevant dependencies inside the PX4 source using environment variables. These two scripts need to be run for every new terminal. Alternatively, adding them to `~/.bashrc` will automatically execute them with every new terminal
 
-``` bash
+``` 
 echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 echo "source ~/catkin_ws/src/ifo_gazebo/setup_ifo_gazebo.bash suppress" >> ~/.bashrc
 ```
