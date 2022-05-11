@@ -56,7 +56,7 @@ and test to see that all the packages get built successfully, with the px4 packa
 ### Building the PX4-Autopilot Source Code
 To compile PX4 manually, we must first install the toolchain. Thankfully PX4 provides an install script which installs everything required. The PX4 documentation cites that their installation scripts, are intended for a _clean_ Ubuntu 18.04 installation. It might still work for a non-fresh installation though. 
 
-    bash ~/catkin_ws/src/PX4-Autopilot/Tools/setup/ubuntu.sh
+    bash ~/catkin_ws/src/ifo_gazebo/PX4-Autopilot/Tools/setup/ubuntu.sh
 
 Reboot your computer when complete. Technically, at this point, your computer is also outfitted with a development environment to modify the PX4 source code itself, and do some basic software-in-the-loop (SITL) testing in simulation.  Now, build the PX4 code. 
 
