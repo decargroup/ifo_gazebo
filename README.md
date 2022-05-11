@@ -85,7 +85,7 @@ As per the official [MAVROS installation instructions](https://github.com/mavlin
 ``` bash
 cd ~
 wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
-./install_geographiclib_datasets.sh
+sudo bash ./install_geographiclib_datasets.sh
 rm install_geographiclib_datasets.sh     # Delete the file once done.
 ```
 
