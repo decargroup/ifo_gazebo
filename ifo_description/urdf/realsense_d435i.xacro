@@ -44,31 +44,23 @@
     <parent link="${parent}"/>
     <child link="${name}_link"/>
   </joint>
-  
-  <gazebo reference="${name}_link">
-    <self_collide>0</self_collide>
-    <kinematic>0</kinematic>
-    <gravity>0</gravity>
-    <visual>
-      <cast_shadows>1</cast_shadows>
-    </visual>
-    <inertial>
-      <mass> 0.0000001 </mass>
-      <inertia> 
-        <ixx> 1e-10 </ixx>
-        <iyy> 1e-10 </iyy>
-        <izz> 1e-10 </izz>
-      </inertia>
-    </inertial>
 
-    <!-- =================================================================== -->
-    <!--                                 IMU                                 -->
-    <!-- =================================================================== -->
-    
-    <sensor name="imu_sensor" type="imu">
+  <link name="${name}_imu_link"/>
+
+  <joint name="${name}_imu_joint" type="fixed">
       <!-- Rotate and translate IMU to be same as real realsense-->
-      <!-- Frame is y up, z forward-->
-      <pose>-0.0051 0.01195 -0.01174 -1.5707 0 -1.5707</pose>
+      <!-- Frame is y DOWN, z forward-->
+    <origin xyz="-0.0051 0.01195 -0.01174" rpy="-1.5707 0 -1.5707" />
+    <parent link="${name}_link"/>
+    <child link="${name}_imu_link"/>
+  </joint>
+  
+
+  <!-- =================================================================== -->
+  <!--                                 IMU                                 -->
+  <!-- =================================================================== -->
+  <gazebo reference="${name}_imu_link">
+    <sensor name="imu_sensor" type="imu">
       <always_on>1</always_on>
       <update_rate>100.0</update_rate>
       <topic>${name}/imu</topic>
@@ -131,12 +123,34 @@
         <robotNamespace></robotNamespace>
         <topicName>${name}/imu</topicName>
         <bodyName>${name}_link</bodyName>
-        <updateRateHZ>200.0</updateRateHZ>
+        <updateRateHZ>100.0</updateRateHZ>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
         <frameName>${name}_link</frameName>
       </plugin>
     </sensor>
+  </gazebo>
+
+
+
+  <gazebo reference="${name}_link">
+    <self_collide>0</self_collide>
+    <kinematic>0</kinematic>
+    <gravity>0</gravity>
+    <visual>
+      <cast_shadows>1</cast_shadows>
+    </visual>
+    <!-- <inertial>
+      <mass> 0.0000001 </mass>
+      <inertia> 
+        <ixx> 1e-10 </ixx>
+        <iyy> 1e-10 </iyy>
+        <izz> 1e-10 </izz>
+      </inertia>
+    </inertial> -->
+
+    
+  
 
     <!-- =================================================================== -->
     <!--                              CAMERAS                                -->
