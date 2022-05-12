@@ -47,12 +47,12 @@
 
     <group ns="$(arg vehicle_name_2)">
         <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
-            <arg name="x" value="0"/>
+            <arg name="x" value="2"/>
             <arg name="y" value="2"/>
             <arg name="z" value="0"/>
             <arg name="R" value="0"/>
             <arg name="P" value="0"/>
-            <arg name="Y" value="0"/>
+            <arg name="Y" value="-2"/>
             <arg name="ID" value="$(arg ID_2)"/>
             <arg name="vehicle_name_gazebo" value="$(arg vehicle_name_2)"/>
             <arg name="namespace" value="$(arg vehicle_name_2)"/>
@@ -61,12 +61,12 @@
 
     <group ns="$(arg vehicle_name_3)">
         <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
-            <arg name="x" value="0"/>
+            <arg name="x" value="2"/>
             <arg name="y" value="-2"/>
             <arg name="z" value="0"/>
             <arg name="R" value="0"/>
             <arg name="P" value="0"/>
-            <arg name="Y" value="0"/>
+            <arg name="Y" value="1.57"/>
             <arg name="ID" value="$(arg ID_3)"/>
             <arg name="vehicle_name_gazebo" value="$(arg vehicle_name_3)"/>
             <arg name="namespace" value="$(arg vehicle_name_3)"/>
