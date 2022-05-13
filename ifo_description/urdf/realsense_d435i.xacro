@@ -45,6 +45,12 @@
     <child link="${name}_link"/>
   </joint>
   
+  <gazebo reference="${name}_link">
+    <self_collide>0</self_collide>
+    <enable_wind>0</enable_wind>
+    <kinematic>0</kinematic>
+    <gravity>0</gravity>
+  </gazebo>
 
   <!-- =================================================================== -->
   <!--                                 IMU                                 -->
