@@ -44,7 +44,11 @@
     <parent link="${parent}"/>
     <child link="${name}_link"/>
   </joint>
+  
 
+  <!-- =================================================================== -->
+  <!--                                 IMU                                 -->
+  <!-- =================================================================== -->
   <link name="${name}_imu_link"/>
 
   <joint name="${name}_imu_joint" type="fixed">
@@ -54,11 +58,7 @@
     <parent link="${name}_link"/>
     <child link="${name}_imu_link"/>
   </joint>
-  
 
-  <!-- =================================================================== -->
-  <!--                                 IMU                                 -->
-  <!-- =================================================================== -->
   <gazebo reference="${name}_imu_link">
     <sensor name="imu_sensor" type="imu">
       <always_on>1</always_on>
@@ -132,32 +132,34 @@
   </gazebo>
 
 
+  <!-- =================================================================== -->
+  <!--                              CAMERAS                                -->
+  <!-- =================================================================== -->
+  <!-- 
+  See the following link for dimensions. Page 88.
+  https://www.intelrealsense.com/wp-content/uploads/2022/03/Intel-RealSense-D400-Series-Datasheet-March-2022.pdf
+  -->
 
-  <gazebo reference="${name}_link">
+  <!-- _____________________ Realsense colour camera ______________________-->
+  <link name="${name}_color_link"/>
+
+  <joint name="${name}_color_joint" type="fixed">
+    <origin xyz="0 0.0325 0" rpy="0 0 0" />
+    <parent link="${name}_link"/>
+    <child link="${name}_color_link"/>
+  </joint>
+
+  <gazebo reference="${name}_color_link">
     <self_collide>0</self_collide>
     <kinematic>0</kinematic>
     <gravity>0</gravity>
     <visual>
       <cast_shadows>1</cast_shadows>
     </visual>
-    <!-- <inertial>
-      <mass> 0.0000001 </mass>
-      <inertia> 
-        <ixx> 1e-10 </ixx>
-        <iyy> 1e-10 </iyy>
-        <izz> 1e-10 </izz>
-      </inertia>
-    </inertial> -->
 
     
-  
-
-    <!-- =================================================================== -->
-    <!--                              CAMERAS                                -->
-    <!-- =================================================================== -->
-    <!-- Realsense colour camera-->
     <sensor name="${name}_color" type="camera">
-      <pose>0 -0.0115 0 0 0 0</pose>
+      <!-- <pose>0 -0.0115 0 0 0 0</pose> -->
       <camera name="${name}">
         <horizontal_fov>1.211259</horizontal_fov>
         <image>
@@ -180,9 +182,27 @@
       <visualize>0</visualize>
     </sensor>
 
-    <!-- Realsense infrared camera 1 (left)-->
+  </gazebo>
+
+  <!-- _______________ Realsense infrared camera 1 (left) _________________-->
+  <link name="${name}_infra1_link"/>
+
+  <joint name="${name}_infra1_joint" type="fixed">
+    <origin xyz="0 0.0175 0" rpy="0 0 0" />
+    <parent link="${name}_link"/>
+    <child link="${name}_infra1_link"/>
+  </joint>
+
+  <gazebo reference="${name}_infra1_link">
+    <self_collide>0</self_collide>
+    <kinematic>0</kinematic>
+    <gravity>0</gravity>
+    <visual>
+      <cast_shadows>1</cast_shadows>
+    </visual>
+    
     <sensor name="${name}_ired1" type="camera">
-      <pose>0 0.0175 0 0 0 0</pose>
+      <!-- <pose>0 0.0175 0 0 0 0</pose> -->
       <camera name="${name}">
         <horizontal_fov>1.487021</horizontal_fov>
         <image>
@@ -205,9 +225,29 @@
       <visualize>0</visualize>
     </sensor>
 
-    <!-- Realsense infrared camera 2 (right)-->
+  </gazebo>
+
+
+  <!-- _______________ Realsense infrared camera 2 (right) ________________-->
+  <link name="${name}_infra2_link"/>
+
+  <joint name="${name}_infra2_joint" type="fixed">
+    <origin xyz="0 -0.0325 0" rpy="0 0 0" />
+    <parent link="${name}_link"/>
+    <child link="${name}_infra2_link"/>
+  </joint>
+
+  <gazebo reference="${name}_infra2_link">
+    <self_collide>0</self_collide>
+    <kinematic>0</kinematic>
+    <gravity>0</gravity>
+    <visual>
+      <cast_shadows>1</cast_shadows>
+    </visual>
+
+    
     <sensor name="${name}_ired2" type="camera">
-      <pose>0 -0.0325 0 0 0 0</pose>
+      <!-- <pose>0 -0.0325 0 0 0 0</pose> -->
       <camera name="${name}">
         <horizontal_fov>1.487021</horizontal_fov>
         <image>
@@ -229,10 +269,30 @@
       <update_rate>15</update_rate>
       <visualize>0</visualize>
     </sensor>
+  
+  </gazebo>
 
-    <!-- Realsense depth camera-->
+
+  <!-- _____________________ Realsense depth camera  ______________________-->
+  <link name="${name}_depth_link"/>
+
+  <joint name="${name}_depth_joint" type="fixed">
+    <origin xyz="0 0.0325 0" rpy="0 0 0" />
+    <parent link="${name}_link"/>
+    <child link="${name}_depth_link"/>
+  </joint>
+
+  <gazebo reference="${name}_depth_link">
+    <self_collide>0</self_collide>
+    <kinematic>0</kinematic>
+    <gravity>0</gravity>
+    <visual>
+      <cast_shadows>1</cast_shadows>
+    </visual>
+
+    
     <sensor name="${name}_depth" type="depth">
-    <pose>0 0.0325 0 0 0 0</pose>
+    <!-- <pose>0 0.0325 0 0 0 0</pose> -->
       <camera name="${name}">
         <horizontal_fov>1.487021</horizontal_fov>
         <image>
@@ -253,43 +313,41 @@
       <update_rate>15</update_rate>
       <visualize>0</visualize>
     </sensor>
-
   </gazebo>
 
-
+  <!-- ________________________ Realsense PLUGIN  _________________________-->
   <gazebo>
-  <!-- Realsense Plugin -->
-  <plugin name="/${name}" filename="librealsense_gazebo_plugin.so">
-    <prefix>${name}_</prefix>
+    <plugin name="/${name}" filename="librealsense_gazebo_plugin.so">
+      <prefix>${name}_</prefix>
 
-    <!-- Color camera settings-->
-    <colorUpdateRate>15.0</colorUpdateRate>
-    <colorTopicName>color/image_raw</colorTopicName>
-    <colorCameraInfoTopicName>color/camera_info</colorCameraInfoTopicName>
-    <colorOpticalframeName>${name}_color_optical_frame</colorOpticalframeName>
+      <!-- Color camera settings-->
+      <colorUpdateRate>15.0</colorUpdateRate>
+      <colorTopicName>color/image_raw</colorTopicName>
+      <colorCameraInfoTopicName>color/camera_info</colorCameraInfoTopicName>
+      <colorOpticalframeName>${name}_color_optical_frame</colorOpticalframeName>
 
 
-    <!-- Infrared camera settings-->
-    <infraredUpdateRate>15.0</infraredUpdateRate>
-    <infrared1TopicName>infra1/image_raw</infrared1TopicName>
-    <infrared1CameraInfoTopicName>infra1/camera_info</infrared1CameraInfoTopicName>
-    <infrared1OpticalframeName>${name}_infrared1_optical_frame</infrared1OpticalframeName>
-    <infrared2TopicName>infra2/image_raw</infrared2TopicName>
-    <infrared2CameraInfoTopicName>infra2/camera_info</infrared2CameraInfoTopicName>
-    <infrared2OpticalframeName>${name}_infrared2_optical_frame</infrared2OpticalframeName>
+      <!-- Infrared camera settings-->
+      <infraredUpdateRate>15.0</infraredUpdateRate>
+      <infrared1TopicName>infra1/image_raw</infrared1TopicName>
+      <infrared1CameraInfoTopicName>infra1/camera_info</infrared1CameraInfoTopicName>
+      <infrared1OpticalframeName>${name}_infrared1_optical_frame</infrared1OpticalframeName>
+      <infrared2TopicName>infra2/image_raw</infrared2TopicName>
+      <infrared2CameraInfoTopicName>infra2/camera_info</infrared2CameraInfoTopicName>
+      <infrared2OpticalframeName>${name}_infrared2_optical_frame</infrared2OpticalframeName>
 
-    <!-- Depth camera settings-->
-    <depthUpdateRate>15.0</depthUpdateRate>
-    <depthTopicName>depth/image_raw</depthTopicName>
-    <depthCameraInfoTopicName>depth/camera_info</depthCameraInfoTopicName>
-    <depthOpticalframeName>${name}_depth_optical_frame</depthOpticalframeName>
-    <rangeMinDepth>0.1</rangeMinDepth>
-    <rangeMaxDepth>10.0</rangeMaxDepth>
-    <pointCloud>true</pointCloud>
-    <pointCloudTopicName>depth/color/points</pointCloudTopicName>
-    <pointCloudCutoff>0.25</pointCloudCutoff>
-    <pointCloudCutoffMax>9.0</pointCloudCutoffMax>
-  </plugin> 
+      <!-- Depth camera settings-->
+      <depthUpdateRate>15.0</depthUpdateRate>
+      <depthTopicName>depth/image_raw</depthTopicName>
+      <depthCameraInfoTopicName>depth/camera_info</depthCameraInfoTopicName>
+      <depthOpticalframeName>${name}_depth_optical_frame</depthOpticalframeName>
+      <rangeMinDepth>0.1</rangeMinDepth>
+      <rangeMaxDepth>10.0</rangeMaxDepth>
+      <pointCloud>true</pointCloud>
+      <pointCloudTopicName>depth/color/points</pointCloudTopicName>
+      <pointCloudCutoff>0.25</pointCloudCutoff>
+      <pointCloudCutoffMax>9.0</pointCloudCutoffMax>
+    </plugin> 
   </gazebo>
 
 </xacro:macro>
