@@ -20,6 +20,7 @@
     <!-- Spawn vehicle -->
     <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
         <arg name="interactive" value="true"/>
+        <arg name="emulate_mocap" value="$(arg emulate_mocap)"/>
     </include>
 
     
