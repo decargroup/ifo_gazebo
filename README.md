@@ -37,7 +37,7 @@ This repo is a collection of ROS packages that contains everything you need to c
 The `PX4-Autopilot` repo, which contains the software of the Uvify IFO-S flight controller, is stored as submodule of this repo. This allows the PX4 directory to be fixed relative to the gazebo model, which simplifies the simulator start-up procedure since the user no longer needs to specify the location of PX4 source code. Moreover, this gives us control of the exact version of `PX4-Autopilot`, meaning this repo will not break if the PX4 developers push a new commit to the `PX-Autopilot` repo. The `PX4-Autopilot` repo has lots of submodules itself, so it is critical to clone this repo with the `--recursive` flag. Start by creating the folder `~/catkin_ws/src/`. Then
 
     cd ~/catkin_ws/src
-    git clone https://bitbucket.org/decargroup/ifo_gazebo.git --recursive
+    git clone git@github.com:decarsg/ifo_gazebo.git --recursive
 
 Feel free to change the above URL to one appropriate for SSH-keys. Alternatively, you can clone this repo regularly and then run `git submodule update --init --recursive`. 
 
