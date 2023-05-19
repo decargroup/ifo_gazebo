@@ -1,19 +1,20 @@
 <?xml version="1.0"?> 
 <robot name='ifo' xmlns:xacro="http://www.ros.org/wiki/xacro">
     <!-- This is the main top-level file-->
-    <!-- TODO: add user option to omit realsense for a "lighter" version. -->
-
     <xacro:arg name="mavlink_tcp_port" default="4560" />
     <xacro:arg name="mavlink_udp_port" default="14560" />
     <xacro:arg name="namespace" default=""/>
+    <xacro:arg name="camera" default="true"/>
 
     <!-- Include base -->
     <xacro:include filename="$(find ifo_description)/urdf/ifo_base.xacro" />
     <xacro:ifo_base_macro mavlink_tcp_port="$(arg mavlink_tcp_port)" mavlink_udp_port="$(arg mavlink_udp_port)"/>
 
     <!-- Include realsense -->
-    <xacro:include filename="$(find ifo_description)/urdf/realsense_d435i.xacro"/>
-    <xacro:realsense_d435i parent="base_link" name="$(arg namespace)/camera">
-        <origin xyz="0.12 0 0" rpy="0 0 0" />
-    </xacro:realsense_d435i>
+    <xacro:if value="$(arg camera)">
+        <xacro:include filename="$(find ifo_description)/urdf/realsense_d435i.xacro"/>
+        <xacro:realsense_d435i parent="base_link" name="$(arg namespace)/camera">
+            <origin xyz="0.12 0 0" rpy="0 0 0" />
+        </xacro:realsense_d435i>
+    </xacro:if>
 </robot>
