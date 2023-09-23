@@ -54,7 +54,7 @@ and test to see that all the packages get built successfully, with the px4 packa
 >**Note:  We prefer `catkin build` instead of `catkin_make` to build a ROS workspace, but `catkin_make` should also be possible. Check out the [documentation for catkin](https://catkin-tools.readthedocs.io/en/latest/verbs/catkin_build.html).**
 
 ### Building the PX4-Autopilot Source Code
-To compile PX4 manually, we must first install the toolchain. Thankfully PX4 provides an install script which installs everything required. The PX4 documentation cites that their installation scripts, are intended for a _clean_ Ubuntu 18.04 installation. It might still work for a non-fresh installation though. 
+To compile PX4 manually, we must first install the toolchain. Thankfully PX4 provides an install script which installs everything required. The PX4 documentation cites that their installation scripts, are intended for a _clean_ Ubuntu 18.04 installation. It might still work for a non-fresh installation, but it is recommended to run `rm -rf ~/.ros` beforehand. 
 
     bash ~/catkin_ws/src/ifo_gazebo/PX4-Autopilot/Tools/setup/ubuntu.sh
 
