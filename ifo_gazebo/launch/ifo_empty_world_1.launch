@@ -16,8 +16,8 @@
     </include>
     
     <!-- ================================================================== -->
-    <!-- Spawn vehicles-->
     <!-- Spawn vehicle -->
+    <param name="robot_id" type="str" value="ifo001" />
     <include file="$(find ifo_gazebo)/launch/ifo_spawn_single.launch">
         <arg name="interactive" value="true"/>
         <arg name="emulate_mocap" value="$(arg emulate_mocap)"/>
